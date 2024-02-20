@@ -36,7 +36,7 @@ const serverlessConfiguration: AWS = {
               'dynamodb:UpdateItem',
               'dynamodb:DeleteItem',
             ],
-            Resource: 'arn:aws:dynamodb:localhost:*:table/CharacterTable',
+            Resource: 'arn:aws:dynamodb:us-east-1:*:table/CharacterTable',
           },
         ],
       },
@@ -59,10 +59,8 @@ const serverlessConfiguration: AWS = {
     dynamodb: {
       start: {
         port: 5000,
-        docker: true,
         inMemory: true,
         migrate: true,
-        seed: true,
       },
       stages: 'dev',
     },
