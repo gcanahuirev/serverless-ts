@@ -1,10 +1,20 @@
+# vscode
+.vscode/
+
 # package directories
-node_modules
-jspm_packages
+node_modules/
+jspm_packages/
 
 # Serverless directories
-.serverless
-.dynamodb
+.serverless/
+.dynamodb/
 
 # esbuild directories
-.esbuild
+.esbuild/
+
+# dotenv environment variables file
+.env
+.env.*
+
+# volumes persistence
+data/

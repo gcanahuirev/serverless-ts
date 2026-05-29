@@ -1,25 +1,24 @@
-import type { AWS } from '@serverless/typescript';
+import type { AWS } from '@serverless/typescript'
 
 import {
   health,
   getAllCharacters,
   createCharacter,
-} from '@functions/character/index';
-import { getPerson } from '@functions/swapi';
+} from '@/functions/character/index'
+import { getPerson } from '@/functions/swapi'
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-ts',
-  frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-dynamodb', 'serverless-offline'],
+  frameworkVersion: '4',
+  plugins: ['serverless-esbuild', 'serverless-localstack'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs20.x',
+    runtime: 'nodejs24.x',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
     environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
     iam: {
@@ -44,17 +43,25 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: { health, getAllCharacters, createCharacter, getPerson },
-  package: { individually: true },
+  package: { individually: false },
   custom: {
+    defaultStage: 'local',
+    localstack: {
+      stages: ['local'],
+      networks: ['localstack-net'],
+      docker: {
+        compose_file: './docker/docker-compose.yml',
+      },
+    },
     esbuild: {
       bundle: true,
       minify: false,
-      sourcemap: true,
-      exclude: ['aws-sdk'],
-      target: 'node20',
-      define: { 'require.resolve': undefined },
+      sourcemap: false,
+      exclude: ['aws-sdk/*'],
+      target: 'node24',
       platform: 'node',
-      concurrency: 10,
+      packager: 'pnpm',
+      concurrency: 5,
     },
     dynamodb: {
       start: {
@@ -91,6 +98,6 @@ const serverlessConfiguration: AWS = {
       },
     },
   },
-};
+}
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration

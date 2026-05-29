@@ -1,15 +1,17 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "sourceMap": true,
-    "target": "ES2022",
     "strict": true,
-    "outDir": "lib"
+    "types": ["node", "aws-lambda"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts", "serverless.ts"],
   "exclude": [
@@ -18,8 +20,5 @@
     ".webpack/**/*",
     "_warmup/**/*",
     ".vscode/**/*"
-  ],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  }
+  ]
 }
