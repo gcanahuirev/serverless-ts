@@ -3,20 +3,22 @@ import type { AWS } from '@serverless/typescript'
 import {
   health,
   getAllCharacters,
-  createCharacter,
+  createOneCharacter,
 } from '@/functions/character/index'
 import { getPerson } from '@/functions/swapi'
 
-const serverlessConfiguration: AWS = {
+const serverlessConfiguration = {
   service: 'serverless-ts',
   frameworkVersion: '4',
-  plugins: ['serverless-esbuild', 'serverless-localstack'],
+  plugins: ['serverless-localstack'],
+  dashboard: {
+    disableMonitoring: false,
+  },
   provider: {
     name: 'aws',
     runtime: 'nodejs24.x',
-    apiGateway: {
-      minimumCompressionSize: 1024,
-      shouldStartNameWithService: true,
+    httpApi: {
+      cors: false,
     },
     environment: {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
@@ -41,9 +43,13 @@ const serverlessConfiguration: AWS = {
       },
     },
   },
-  // import the function via paths
-  functions: { health, getAllCharacters, createCharacter, getPerson },
-  package: { individually: false },
+  functions: { health, getAllCharacters, createOneCharacter, getPerson },
+  package: { individually: true },
+  build: {
+    esbuild: {
+      configFile: './esbuild.config.js',
+    },
+  },
   custom: {
     defaultStage: 'local',
     localstack: {
@@ -53,51 +59,33 @@ const serverlessConfiguration: AWS = {
         compose_file: './docker/docker-compose.yml',
       },
     },
-    esbuild: {
-      bundle: true,
-      minify: false,
-      sourcemap: false,
-      exclude: ['aws-sdk/*'],
-      target: 'node24',
-      platform: 'node',
-      packager: 'pnpm',
-      concurrency: 5,
-    },
-    dynamodb: {
-      start: {
-        port: 5000,
-        inMemory: true,
-        migrate: true,
-      },
-      stages: 'dev',
-    },
-    resources: {
-      Resources: {
-        CharacterTable: {
-          Type: 'AWS::DynamoDB::Table',
-          Properties: {
-            TableName: 'CharacterTable',
-            AttributeDefinitions: [
-              {
-                AttributeName: 'characterId',
-                AttributeType: 'S',
-              },
-            ],
-            KeySchema: [
-              {
-                AttributeName: 'characterId',
-                KeyType: 'HASH',
-              },
-            ],
-            ProvisionedThroughput: {
-              ReadCapacityUnits: 1,
-              WriteCapacityUnits: 1,
+  },
+  resources: {
+    Resources: {
+      CharacterTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'CharacterTable',
+          AttributeDefinitions: [
+            {
+              AttributeName: 'characterId',
+              AttributeType: 'S',
             },
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'characterId',
+              KeyType: 'HASH',
+            },
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
           },
         },
       },
     },
   },
-}
+} satisfies AWS
 
-module.exports = serverlessConfiguration
+export default serverlessConfiguration

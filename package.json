@@ -3,20 +3,20 @@
   "version": "1.0.0",
   "license": "MIT",
   "main": "serverless.ts",
+  "type": "module",
   "description": "Serverless aws-nodejs-typescript template",
   "scripts": {
     "lint": "biome lint .",
     "format": "biome format . --write"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.1056.0",
-    "@aws-sdk/lib-dynamodb": "^3.1056.0",
+    "@aws-sdk/client-dynamodb": "^3.1057.0",
+    "@aws-sdk/lib-dynamodb": "^3.1057.0",
     "@middy/core": "^7.6.5",
     "@middy/http-error-handler": "^7.6.5",
     "@middy/http-header-normalizer": "^7.6.5",
     "@middy/http-json-body-parser": "^7.6.5",
     "@middy/http-security-headers": "^7.6.5",
-    "@middy/validator": "^7.6.5",
     "ky": "^2.0.2",
     "valibot": "^1.4.1"
   },
@@ -27,9 +27,7 @@
     "@types/node": "^24.12.4",
     "esbuild": "^0.28.0",
     "serverless": "^4.30.0",
-    "serverless-esbuild": "^1.57.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
+    "serverless-localstack": "^1.4.0",
     "typescript": "^6.0.3"
   },
   "engines": {
