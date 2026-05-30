@@ -1,13 +1,11 @@
-import { handlerPath } from '@libs/handler-resolver';
-
 export const getPerson = {
-  handler: `${handlerPath(__dirname)}/handler.getPerson`,
+  handler: 'src/functions/swapi/application/handler.getPerson',
   events: [
     {
-      http: {
-        method: 'get',
+      httpApi: {
+        method: 'GET',
         path: 'people/{id}',
       },
     },
   ],
-};
+}

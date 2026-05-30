@@ -1,9 +1,9 @@
-import CharacterRepository from './repository';
-import { dynamoDBClient } from './dynamodb';
+import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
+import { dynamoDBClient } from './dynamodb'
+import CharacterRepository from './repository'
 
-const docClient = DynamoDBDocumentClient.from(dynamoDBClient());
-const characterRepository = new CharacterRepository(docClient);
+const docClient = DynamoDBDocumentClient.from(dynamoDBClient())
+const characterRepository = new CharacterRepository(docClient)
 
-export default characterRepository;
+export default characterRepository

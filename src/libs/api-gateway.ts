@@ -1,22 +1,30 @@
 import type {
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult,
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2,
   Handler,
-} from 'aws-lambda';
-import type { FromSchema, JSONSchema7Extension } from 'json-schema-to-ts';
+} from 'aws-lambda'
+import type { GenericSchema, InferInput } from 'valibot'
 
-type ValidatedAPIGatewayProxyEvent<S extends JSONSchema7Extension> = Omit<
-  APIGatewayProxyEvent,
+type ValidatedAPIGatewayProxyEvent<TSchema extends GenericSchema> = Omit<
+  APIGatewayProxyEventV2,
   'body' | 'queryStringParameters'
 > & {
-  body: FromSchema<S>;
-} & { queryStringParameters: FromSchema<S> };
-export type ValidatedEventAPIGatewayProxyEvent<S extends JSONSchema7Extension> =
-  Handler<ValidatedAPIGatewayProxyEvent<S>, APIGatewayProxyResult>;
+  body: InferInput<TSchema>
+  queryStringParameters: InferInput<TSchema>
+}
 
-export const formatJSONResponse = (response: Record<string, unknown>) => {
+export type ValidatedEventAPIGatewayProxyEvent<TSchema extends GenericSchema> =
+  Handler<ValidatedAPIGatewayProxyEvent<TSchema>, APIGatewayProxyResultV2>
+
+export const formatJSONResponse = (
+  response: Record<string, unknown>,
+  statusCode = 200,
+): APIGatewayProxyResultV2 => {
   return {
-    statusCode: 200,
+    statusCode,
+    headers: {
+      'content-type': 'application/json',
+    },
     body: JSON.stringify(response),
-  };
-};
+  }
+}

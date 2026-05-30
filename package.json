@@ -6,8 +6,9 @@
   "type": "module",
   "description": "Serverless aws-nodejs-typescript template",
   "scripts": {
-    "lint": "biome lint .",
-    "format": "biome format . --write"
+    "dev": "serverless deploy --stage dev",
+    "deploy": "serverless deploy",
+    "check": "biome check --write ."
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1057.0",

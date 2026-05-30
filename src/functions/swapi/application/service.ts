@@ -1,10 +1,10 @@
-import { Person } from '../domain/entity';
-import { IPeopleService } from '../domain/interface';
-import { getPerson } from '../infrastructure/api';
+import type { Person } from '../domain/entity'
+import type { IPeopleService } from '../domain/interface'
+import { getPerson } from '../infrastructure/api'
 
 export class PeopleService implements IPeopleService {
   async getOne(id: number): Promise<Person> {
-    const data = await getPerson(id);
+    const data = await getPerson(id)
     return {
       año_nacimiento: data.birth_year,
       color_ojo: data.eye_color,
@@ -22,6 +22,6 @@ export class PeopleService implements IPeopleService {
       naves: data.starships,
       url: data.url,
       vehículos: data.vehicles,
-    };
+    }
   }
 }

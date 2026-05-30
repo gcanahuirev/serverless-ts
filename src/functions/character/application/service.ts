@@ -1,15 +1,15 @@
-import { Character } from '../domain/entity';
-import { ICharacterService } from '../domain/interface';
-import characterRepository from '../infrastructure';
+import type { ICharacterService } from '../domain/interface'
+import characterRepository from '../infrastructure'
+import type { Character, CreateOneCharacter } from './schema'
 
 export class CharacterService implements ICharacterService {
-  async create(data: Partial<Character>): Promise<Character> {
-    const response = await characterRepository.createCharacter(data);
-    return response;
+  async createOne(data: CreateOneCharacter): Promise<Character> {
+    const response = await characterRepository.createOneCharacter(data)
+    return response
   }
 
   async getAll(): Promise<Character[]> {
-    const response = await characterRepository.getAllCharacteres();
-    return response;
+    const response = await characterRepository.getAllCharacters()
+    return response
   }
 }

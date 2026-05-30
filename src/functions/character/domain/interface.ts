@@ -1,6 +1,6 @@
-import { Character } from './entity';
+import type { Character, CreateOneCharacter } from '../application/schema'
 
 export interface ICharacterService {
-  create(data: Partial<Character>): Promise<Character>;
-  getAll(): Promise<Character[]>;
+  createOne(data: CreateOneCharacter): Promise<Character>
+  getAll(): Promise<Character[]>
 }

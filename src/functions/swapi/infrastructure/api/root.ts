@@ -1,7 +1,7 @@
-import { swapi } from '..';
-import { IRoot } from '../interface';
+import type { IRoot } from '../interface'
+import { swapi } from '..'
 
 export async function getResources(): Promise<IRoot> {
-  const data = await swapi().get('').json<IRoot>();
-  return data;
+  const data = await swapi().get('').json<IRoot>()
+  return data
 }

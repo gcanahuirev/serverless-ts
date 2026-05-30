@@ -1,43 +1,35 @@
-import { handlerPath } from '@libs/handler-resolver';
-import { characterSchema } from './schema';
-
 export const health = {
-  handler: `${handlerPath(__dirname)}/handler.health`,
+  handler: 'src/functions/character/application/handler.health',
   events: [
     {
-      http: {
-        method: 'get',
+      httpApi: {
+        method: 'GET',
         path: 'character/health',
       },
     },
   ],
-};
+}
 
-export const createCharacter = {
-  handler: `${handlerPath(__dirname)}/handler.createCharacter`,
+export const createOneCharacter = {
+  handler: 'src/functions/character/application/handler.createOneCharacter',
   events: [
     {
-      http: {
-        method: 'post',
+      httpApi: {
+        method: 'POST',
         path: 'character',
-        request: {
-          schemas: {
-            'application/json': characterSchema,
-          },
-        },
       },
     },
   ],
-};
+}
 
 export const getAllCharacters = {
-  handler: `${handlerPath(__dirname)}/handler.getAllCharacters`,
+  handler: 'src/functions/character/application/handler.getAllCharacters',
   events: [
     {
-      http: {
-        method: 'get',
+      httpApi: {
+        method: 'GET',
         path: 'character',
       },
     },
   ],
-};
+}

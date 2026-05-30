@@ -1,4 +1,4 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 
 export const dynamoDBClient = (): DynamoDBClient => {
   if (process.env.IS_OFFLINE) {
@@ -9,7 +9,7 @@ export const dynamoDBClient = (): DynamoDBClient => {
         accessKeyId: 'MockAccessKeyId',
         secretAccessKey: 'MockSecretAccessKey',
       },
-    });
+    })
   }
-  return new DynamoDBClient();
-};
+  return new DynamoDBClient()
+}

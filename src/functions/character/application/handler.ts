@@ -1,54 +1,43 @@
-import { APIGatewayProxyResultV2 } from 'aws-lambda';
-import { formatJSONResponse } from '@libs/api-gateway';
-import { middyfy } from '@libs/lambda';
-import { randomUUID } from 'crypto';
-// import { characterSchema } from './schema';
-import { CharacterService } from './service';
-import { Character } from '../domain/entity';
+import { randomUUID } from 'node:crypto'
+import * as v from 'valibot'
 
-const characterService = new CharacterService();
+import { formatJSONResponse } from '@/libs/api-gateway'
+import { middyfy } from '@/libs/lambda'
 
-export const health = middyfy(
-  async (event): Promise<APIGatewayProxyResultV2> => {
-    return formatJSONResponse({
-      message: `Hello, welcome to the exciting Serverless world!`,
-      event,
-    });
-  },
-);
+import { CreateOneCharacterSchema } from './schema'
+import { CharacterService } from './service'
 
-export const getAllCharacters = middyfy(
-  async (): Promise<APIGatewayProxyResultV2> => {
-    const data = await characterService.getAll();
-    return formatJSONResponse({
-      data,
-    });
-  },
-);
+const characterService = new CharacterService()
 
-export const createCharacter = middyfy(
-  async (event): Promise<APIGatewayProxyResultV2> => {
-    try {
-      const input = event.body as Partial<Character>;
-      const character: Character = {
-        characterId: randomUUID(),
-        name: input.name ?? 'N/A',
-        gender: input.gender ?? 'N/A',
-        url: input.url ?? 'N/A',
-      };
-      console.log(character);
-      const data = await characterService.create({
-        ...character,
-      });
-      return formatJSONResponse({
-        data,
-      });
-    } catch (e) {
-      console.log(e);
-      return formatJSONResponse({
-        status: 500,
-        message: e,
-      });
-    }
-  },
-);
+export const health = middyfy(async () => {
+  return formatJSONResponse({
+    message: `Hello, welcome to the exciting Serverless world!`,
+  })
+})
+
+export const getAllCharacters = middyfy(async () => {
+  const data = await characterService.getAll()
+  return formatJSONResponse({
+    data,
+  })
+})
+
+export const createOneCharacter = middyfy(async (event) => {
+  if (!event.body) {
+    throw new Error('Request body is required')
+  }
+  const input = v.safeParse(CreateOneCharacterSchema, event.body)
+
+  if (!input.success) {
+    throw new Error(JSON.stringify(input.issues))
+  }
+  const character = {
+    characterId: randomUUID(),
+
+    ...input.output,
+  }
+
+  const data = await characterService.createOne(character)
+
+  return formatJSONResponse({ data }, 201)
+})

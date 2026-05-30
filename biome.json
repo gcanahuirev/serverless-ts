@@ -31,10 +31,22 @@
     }
   },
   "assist": {
-    "enabled": true,
     "actions": {
       "source": {
-        "organizeImports": "off"
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":NODE:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              "../**",
+              "./**"
+            ]
+          }
+        }
       }
     }
   }

@@ -1,9 +1,9 @@
 import type { AWS } from '@serverless/typescript'
 
 import {
-  health,
-  getAllCharacters,
   createOneCharacter,
+  getAllCharacters,
+  health,
 } from '@/functions/character/index'
 import { getPerson } from '@/functions/swapi'
 

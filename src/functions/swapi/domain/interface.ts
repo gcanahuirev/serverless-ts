@@ -1,5 +1,5 @@
-import { Person } from './entity';
+import type { Person } from './entity'
 
 export interface IPeopleService {
-  getOne(id: number): Promise<Person>;
+  getOne(id: number): Promise<Person>
 }
