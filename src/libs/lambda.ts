@@ -15,7 +15,11 @@ export const middyfy = (
     .use(
       httpHeaderNormalizer({ normalizeHeaderKey: (key) => key.toLowerCase() }),
     )
-    .use(httpJsonBodyParser())
+    .use(
+      httpJsonBodyParser({
+        disableContentTypeError: true,
+      }),
+    )
     .use(httpSecurityHeaders())
     .use(httpErrorHandler())
 }

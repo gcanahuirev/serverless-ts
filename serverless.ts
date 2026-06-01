@@ -8,20 +8,42 @@ import {
 import { getPerson } from '@/functions/swapi'
 
 const serverlessConfiguration = {
-  service: 'serverless-ts',
+  app: 'serverless-lab',
+  service: 'sls-ts',
   frameworkVersion: '4',
-  plugins: ['serverless-localstack'],
+  package: { individually: true },
+  stages: {
+    dev: {
+      observability: false,
+    },
+    prod: {
+      observability: true,
+    },
+    default: {
+      observability: false,
+    },
+  },
   dashboard: {
-    disableMonitoring: false,
+    disableMonitoring: true,
   },
   provider: {
     name: 'aws',
+    region: 'us-east-1',
+    stage: '${opt:stage, "dev"}',
+    stackName: '${self:service}-${sls:stage}',
+    deploymentPrefix: '${self:service}-${sls:stage}',
     runtime: 'nodejs24.x',
     httpApi: {
       cors: false,
     },
     environment: {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      CHARACTER_TABLE: '${self:service}-${sls:stage}-character',
+      SWAPI_URL: '${env:SWAPI_URL}',
+    },
+    stackTags: {
+      Project: '${self:service}',
+      Environment: '${sls:stage}',
     },
     iam: {
       role: {
@@ -37,27 +59,18 @@ const serverlessConfiguration = {
               'dynamodb:UpdateItem',
               'dynamodb:DeleteItem',
             ],
-            Resource: 'arn:aws:dynamodb:us-east-1:*:table/CharacterTable',
+            Resource: {
+              'Fn::GetAtt': ['CharacterTable', 'Arn'],
+            },
           },
         ],
       },
     },
   },
   functions: { health, getAllCharacters, createOneCharacter, getPerson },
-  package: { individually: true },
   build: {
     esbuild: {
       configFile: './esbuild.config.js',
-    },
-  },
-  custom: {
-    defaultStage: 'local',
-    localstack: {
-      stages: ['local'],
-      networks: ['localstack-net'],
-      docker: {
-        compose_file: './docker/docker-compose.yml',
-      },
     },
   },
   resources: {
@@ -65,7 +78,8 @@ const serverlessConfiguration = {
       CharacterTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
-          TableName: 'CharacterTable',
+          TableName: '${self:service}-${sls:stage}-character',
+          BillingMode: 'PAY_PER_REQUEST',
           AttributeDefinitions: [
             {
               AttributeName: 'characterId',
@@ -78,10 +92,10 @@ const serverlessConfiguration = {
               KeyType: 'HASH',
             },
           ],
-          ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-          },
+          Tags: [
+            { Key: 'Project', Value: '${self:service}' },
+            { Key: 'Environment', Value: '${sls:stage}' },
+          ],
         },
       },
     },

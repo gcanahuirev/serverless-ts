@@ -1,9 +1,9 @@
 import { formatJSONResponse } from '@/libs/api-gateway'
 import { middyfy } from '@/libs/lambda'
 
-import { PeopleService } from './service'
+import { UserService } from './service'
 
-const peopleService = new PeopleService()
+const userService = new UserService()
 
 export const getPerson = middyfy(async (event) => {
   const id = Number(event.pathParameters?.id)
@@ -12,13 +12,7 @@ export const getPerson = middyfy(async (event) => {
     throw new Error('Invalid id parameter')
   }
 
-  const data = await peopleService.getOne(id)
+  const data = await userService.getOne(id)
 
-  if (!data) {
-    throw new Error('Person not found')
-  }
-
-  return formatJSONResponse({
-    data,
-  })
+  return formatJSONResponse({ data })
 })

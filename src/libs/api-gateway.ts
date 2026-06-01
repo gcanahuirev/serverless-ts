@@ -23,7 +23,7 @@ export const formatJSONResponse = (
   return {
     statusCode,
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(response),
   }

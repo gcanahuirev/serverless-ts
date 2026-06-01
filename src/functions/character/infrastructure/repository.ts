@@ -7,13 +7,13 @@ import {
 import type { Character } from '../domain/entity'
 
 export default class CharacterRepository {
-  private Tablename: string = 'CharacterTable'
+  private tableName: string = process.env.CHARACTER_TABLE || ''
 
   constructor(private docClient: DynamoDBDocumentClient) {}
 
   async getAllCharacters(): Promise<Character[]> {
     const command = new ScanCommand({
-      TableName: this.Tablename,
+      TableName: this.tableName,
     })
     const response = await this.docClient.send(command)
     return response.Items as Character[]
@@ -21,7 +21,7 @@ export default class CharacterRepository {
 
   async createOneCharacter(character: Partial<Character>): Promise<Character> {
     const command = new PutCommand({
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Item: character,
     })
     const response = await this.docClient.send(command)

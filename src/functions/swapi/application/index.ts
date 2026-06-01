@@ -4,7 +4,7 @@ export const getPerson = {
     {
       httpApi: {
         method: 'GET',
-        path: 'people/{id}',
+        path: '/people/{id}',
       },
     },
   ],

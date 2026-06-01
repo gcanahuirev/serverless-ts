@@ -1,19 +1,7 @@
-import type { IPagination, IPerson } from '../interface'
-import { swapi } from '..'
+import type { IUser } from '../interface'
+import { dummy } from '..'
 
-export async function getPeople(
-  search?: string,
-): Promise<IPagination<IPerson>> {
-  const searchParams = new URLSearchParams()
-  if (search) searchParams.set('search', search)
-
-  const data = await swapi()
-    .get('people', { searchParams })
-    .json<IPagination<IPerson>>()
-  return data
-}
-
-export async function getPerson(id: number): Promise<IPerson> {
-  const data = await swapi().get(`people/${id}`).json<IPerson>()
+export async function getPerson(id: number): Promise<IUser> {
+  const data = await dummy().get(`users/${id}`).json<IUser>()
   return data
 }

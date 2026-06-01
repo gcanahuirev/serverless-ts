@@ -4,7 +4,7 @@ export const health = {
     {
       httpApi: {
         method: 'GET',
-        path: 'character/health',
+        path: '/character/health',
       },
     },
   ],
@@ -16,7 +16,7 @@ export const createOneCharacter = {
     {
       httpApi: {
         method: 'POST',
-        path: 'character',
+        path: '/character',
       },
     },
   ],
@@ -28,7 +28,7 @@ export const getAllCharacters = {
     {
       httpApi: {
         method: 'GET',
-        path: 'character',
+        path: '/character',
       },
     },
   ],
