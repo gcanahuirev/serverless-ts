@@ -11,8 +11,8 @@
     "check": "biome check --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.1057.0",
-    "@aws-sdk/lib-dynamodb": "^3.1057.0",
+    "@aws-sdk/client-dynamodb": "^3.1059.0",
+    "@aws-sdk/lib-dynamodb": "^3.1059.0",
     "@middy/core": "^7.6.5",
     "@middy/http-error-handler": "^7.6.5",
     "@middy/http-header-normalizer": "^7.6.5",

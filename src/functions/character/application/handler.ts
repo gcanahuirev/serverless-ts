@@ -11,7 +11,7 @@ const characterService = new CharacterService()
 
 export const health = middyfy(async () => {
   return formatJSONResponse({
-    message: `Hello, welcome to the exciting Serverless world!`,
+    status: 'ok',
   })
 })
 

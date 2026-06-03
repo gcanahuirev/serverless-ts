@@ -9,23 +9,5 @@ export const dummy = () => {
       backoffLimit: 3000,
     },
     throwHttpErrors: true,
-    hooks: {
-      beforeRequest: [
-        (h) => {
-          console.log('URL:', h.request.url)
-          console.log('METHOD:', h.request.method)
-        },
-      ],
-      afterResponse: [
-        async (h) => {
-          console.log('STATUS:', h.response.status)
-          console.log('CONTENT-TYPE:', h.response.headers.get('content-type'))
-
-          const text = await h.response.clone().text()
-
-          console.log('BODY:', text.slice(0, 500))
-        },
-      ],
-    },
   })
 }
