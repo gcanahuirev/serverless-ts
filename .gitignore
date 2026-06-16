@@ -11,10 +11,8 @@ jspm_packages/
 
 # esbuild directories
 .esbuild/
+.artifacts/
 
 # dotenv environment variables file
 .env
 .env.*
-
-# volumes persistence
-data/

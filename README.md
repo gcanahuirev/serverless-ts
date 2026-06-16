@@ -1,62 +1,69 @@
-# Demo Serverless Typescript
+# Serverless AWS TypeScript API
 
-This project has been generated using the `AWS / Node.js / HTTP API` template from the [Serverless framework](https://www.serverless.com/). For detailed instructions, please refer to the [documentation](https://www.serverless.com/framework/docs/getting-started).
+A professional, production-ready Serverless Framework template using Node.js, TypeScript, and AWS. This project implements a clean architecture (Hexagonal/DDD) to manage characters and integrates with the [DummyJSON API](https://dummyjson.com/).
 
-## Requirements
+## Features
 
-- Pnpm >= 11
-- Nodejs >= 24
-- Aws cli >= 2
-- Serverless >= 4
-- Just runner (Optional)
-- Curl or any http client (Optional)
+- **Serverless Framework v4**: Optimized AWS infrastructure as code.
+- **Node.js 24 & TypeScript**: Latest stable runtime and strong typing.
+- **Validation**: Strict schema validation using [Valibot](https://valibot.dev/).
+- **Performance**: Fast bundling with [esbuild](https://esbuild.github.io/).
+- **Quality Control**: Linting and formatting with [Biome](https://biomejs.dev/).
+- **DynamoDB Integration**: Persistent storage for character data.
+- **Task Runner**: [Just](https://just.systems/) for streamlined development workflows.
+- **Hurl Testing**: [Hurl](https://hurl.dev/) for testing.
 
-## Installation/deployment instructions
+## Tech Stack
 
-- Run `pnpm install` to install the project dependencies
-- List available recipes in justfile with `just --list`
-- Run `sls deploy` to deploy this stack to AWS
-- If you remove all services, run `sls remove --stage dev`
+- **Framework**: [Serverless Framework](https://serverless.com/)
+- **Runtime**: Node.js 24.x
+- **Language**: TypeScript
+- **Database**: AWS DynamoDB
+- **HTTP Client**: [Ky](https://github.com/sindresorhus/ky)
+- **Middleware**: [Middy](https://middy.js.org/)
+- **Package Manager**: [pnpm](https://pnpm.io/)
 
-## Test your service
+## Prerequisites
 
-This demo contains 4 lambda functions each activated by an HTTP request made on the API Gateway V2 REST API path. The request body must be provided as `application/json`.
+- **Node.js**: `^24`
+- **pnpm**: `^11`
+- **AWS CLI**: Configured with appropriate credentials.
+- **Serverless Framework**: `^4`
+- **Just**: (Optional) For running task recipes.
 
-### Remotely
+## Installation & Deployment
 
-Copy and replace your `url` - found in Serverless `deploy` command output - and `name` parameter in the following `curl` command in your terminal or in Postman to test your newly deployed application.
-
-- Get healthcheck status of endpoint
-
-```sh
-curl https://{{PATH}}/character/health
+### 1. Clone and Install
+```bash
+pnpm install
 ```
 
-- Get data from a user by id (dummyjson)
+### 2. Configure Environment
+Create a `.env` file or set environment variables for:
+- `SWAPI_URL`: Base URL for the [DummyJSON API](https://dummyjson.com/).
 
-```sh
-curl https://{{PATH}}/people/1
+### 3. Deploy to AWS
+```bash
+# Using Just (default to dev)
+just deploy
+
+# Or via Serverless directly
+pnpm sls deploy --stage dev
 ```
 
-- List of characters
+## Task Runner (Justfile)
 
-```sh
-curl https://{{PATH}}/character
-```
+This project uses `just` to automate common tasks. Run `just --list` to see all available commands.
 
-- Create a new character
+| Command                    | Description                                               |
+| :------------------------- | :-------------------------------------------------------- |
+| `just deploy [stage]`      | Deploy the service to the specified stage (default: dev). |
+| `just remove [stage]`      | Remove the service from AWS.                              |
+| `just info [stage]`        | View service information and endpoints.                   |
+| `just logs [func] [stage]` | Tail logs for a specific function.                        |
+| `just db-scan [stage]`     | Scan the DynamoDB table using AWS CLI.                    |
+| `just check`               | Run Biome linting and formatting.                         |
 
-```sh
-curl -X POST "https://{{PATH}}/character" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Obi-Wan Kenobi",
-    "gender": "male",
-    "url": "https://dummyjson.com/"
-  }'
-```
+## API Endpoints
 
-## References
-- [AWS Lambda Build Configuration](https://www.serverless.com/framework/docs/providers/aws/guide/building)
-- [Upgrading to Serverless Framework V4](https://www.serverless.com/framework/docs/guides/upgrading-v4)
-- [Node.js middleware engine for AWS Lambda](https://middy.js.org/)
+Once deployed, you can test the API using the following endpoints. Replace `{{host}}` with your actual API Gateway URL in `tests.hurl` file.

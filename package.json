@@ -11,22 +11,22 @@
     "check": "biome check --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.1059.0",
-    "@aws-sdk/lib-dynamodb": "^3.1059.0",
-    "@middy/core": "^7.6.5",
-    "@middy/http-error-handler": "^7.6.5",
-    "@middy/http-header-normalizer": "^7.6.5",
-    "@middy/http-json-body-parser": "^7.6.5",
-    "@middy/http-security-headers": "^7.6.5",
+    "@aws-sdk/client-dynamodb": "^3.1068.0",
+    "@aws-sdk/lib-dynamodb": "^3.1068.0",
+    "@middy/core": "^7.6.7",
+    "@middy/http-error-handler": "^7.6.7",
+    "@middy/http-header-normalizer": "^7.6.7",
+    "@middy/http-json-body-parser": "^7.6.7",
+    "@middy/http-security-headers": "^7.6.7",
     "ky": "^2.0.2",
     "valibot": "^1.4.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.16",
+    "@biomejs/biome": "^2.5.0",
     "@serverless/typescript": "^4.30.0",
-    "@types/aws-lambda": "^8.10.161",
+    "@types/aws-lambda": "^8.10.162",
     "@types/node": "^24.12.4",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "serverless": "^4.37.0",
     "typescript": "^6.0.3"
   },
