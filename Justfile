@@ -3,6 +3,10 @@ set shell := ["bash", "-uc"]
 stage := "dev"
 service := "sls-ts"
 
+# List all available commands
+default:
+    @just --list
+
 # Deploy the service (dev default)
 [group('serverless')]
 deploy s=stage:

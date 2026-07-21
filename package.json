@@ -11,8 +11,8 @@
     "check": "biome check --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.1085.0",
-    "@aws-sdk/lib-dynamodb": "^3.1085.0",
+    "@aws-sdk/client-dynamodb": "^3.1091.0",
+    "@aws-sdk/lib-dynamodb": "^3.1091.0",
     "@middy/core": "^7.7.0",
     "@middy/http-error-handler": "^7.7.0",
     "@middy/http-header-normalizer": "^7.7.0",
@@ -22,7 +22,7 @@
     "valibot": "^1.4.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.3",
+    "@biomejs/biome": "^2.5.4",
     "@serverless/typescript": "^4.30.0",
     "@types/aws-lambda": "^8.10.162",
     "@types/node": "^24.12.4",
